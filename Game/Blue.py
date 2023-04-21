@@ -1,0 +1,2 @@
+class Blue:
+    print("Thing")

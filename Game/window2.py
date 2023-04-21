@@ -1,5 +1,30 @@
 from tkinter import *
 
+from Game.Bo import Bo
+from Game.Brandon import Brandon
+from Game.Blue import Blue
+
+counter = 0
+
+
+def increaseCounter(event):
+    global counter
+    counter += 1
+    screen.config(text=str("Page " + str(counter)))
+
+
+def decreaseCounter(event):
+    global counter
+    counter -= 1
+    screen.config(text=str("Page " + str(counter)))
+
+
+def makeImage(image):
+    artFrame.picture = PhotoImage(file=image)
+    artFrame.label = Label(artFrame, image=artFrame.picture)
+    artFrame.label.pack()
+
+
 window = Tk()
 window.title("Flux Interactive Game")
 window.geometry("800x600")
@@ -14,39 +39,69 @@ textFrame = Frame(window)
 artFrame.pack()
 textFrame.pack()
 
-screen = 0
+nextButton = Button(window, text="Next ->")
+nextButton.place(x=(windowWidth - nextButton.winfo_reqwidth()),
+                 y=(windowHeight - nextButton.winfo_reqheight()))
+nextButton.bind("<Button-1>", increaseCounter)
+
+backButton = Button(window, text="<- Back")
+backButton.place(x=(windowWidth - nextButton.winfo_reqwidth() - backButton.winfo_reqwidth()),
+                 y=(windowHeight - backButton.winfo_reqheight()))
+backButton.bind("<Button-1>", decreaseCounter)
+
+screen = Label(window, text=("Page " + str(counter)))
+screen.place(x=0, y=(windowHeight - screen.winfo_reqheight()))
+
+# Page 1 Welcome page, greeting and start button
 
 welcome = Label(window, text="Welcome to Flux!")
-welcome.place(x=((windowWidth/2) - welcome.winfo_reqwidth()/2), y=((windowHeight)/2) - welcome.winfo_reqheight())
+welcome.place(x=((windowWidth / 2) - welcome.winfo_reqwidth() / 2), y=((windowHeight) / 2) - welcome.winfo_reqheight())
 
-def startClick():
+
+def startClick(event):
+    global counter
+    counter = 1
+    screen.config(text=("Page " + str(counter)))
+    makeImage("C:\FluxGame\Tester.png")
+    makePage2()
+
+
+startButton = Button(window, text="Start")
+startButton.pack()
+startButton.bind("<Button-1>", startClick)
+
+
+def nameClicked(event):
+    name = nameEntry.get()
+    namePrompt.config(text=("Welcome to Flux, " + name))
+
+
+namePrompt = Label(textFrame, text="Enter Player Name: ")
+nameEntry = Entry(textFrame)
+nameButton = Button(textFrame, text="Enter")
+
+
+# Page 2 Name entry, prompt,
+
+def makePage2():
     welcome.destroy()
-
-    canvas = Canvas(artFrame, height=400, width=800)
-    canvas.pack(fill=BOTH, expand=1)
-
-    img = PhotoImage(file="C:\FluxGame\Tester.png")
-    canvas.create_image(400, 200, image=img)
-
-    namePrompt = Label(textFrame, text="Enter Player Name: ")
-    nameEntry = Entry(textFrame)
-    nameButton = Button(textFrame, text="Enter")
+    startButton.destroy()
 
     namePrompt.pack(side=TOP)
     nameEntry.pack(side=TOP)
     nameButton.pack(side=TOP)
 
-startButton = Button(text="START")
-startButton.place(x=(windowWidth-startButton.winfo_reqwidth()), y=(windowHeight-startButton.winfo_reqheight()))
+    nameButton.bind("<Button-1>", nameClicked)
 
-"""
-def nameClicked():
-    name = nameEntry.get()
+
+characterPrompt = Label(textFrame, text="Choose Your Character: ")
+
+
+# Page 3 Welcome message, character choice
+def makePage3():
     nameEntry.destroy()
     nameButton.destroy()
-    namePrompt.config(text=("Welcome to Flux, " + name))
-"""
-
+    characterPrompt.pack(side=TOP)
 
 
 window.mainloop()
