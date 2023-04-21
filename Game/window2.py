@@ -4,8 +4,9 @@ from Game.Bo import Bo
 from Game.Brandon import Brandon
 from Game.Blue import Blue
 
-counter = 0
-
+counter = 1
+name = ""
+character = None
 
 def increaseCounter(event):
     global counter
@@ -33,7 +34,7 @@ window.update()
 windowWidth = window.winfo_width()
 windowHeight = window.winfo_height()
 
-artFrame = Frame(window)
+artFrame = Frame(window, width=800, height=400)
 textFrame = Frame(window)
 
 artFrame.pack()
@@ -59,8 +60,6 @@ welcome.place(x=((windowWidth / 2) - welcome.winfo_reqwidth() / 2), y=((windowHe
 
 
 def startClick(event):
-    global counter
-    counter = 1
     screen.config(text=("Page " + str(counter)))
     makeImage("C:\FluxGame\Tester.png")
     makePage2()
@@ -74,6 +73,7 @@ startButton.bind("<Button-1>", startClick)
 def nameClicked(event):
     name = nameEntry.get()
     namePrompt.config(text=("Welcome to Flux, " + name))
+    makePage3()
 
 
 namePrompt = Label(textFrame, text="Enter Player Name: ")
@@ -84,6 +84,10 @@ nameButton = Button(textFrame, text="Enter")
 # Page 2 Name entry, prompt,
 
 def makePage2():
+    global counter
+    counter = 2
+    screen.config(text=str("Page " + str(counter)))
+
     welcome.destroy()
     startButton.destroy()
 
@@ -94,14 +98,25 @@ def makePage2():
     nameButton.bind("<Button-1>", nameClicked)
 
 
-characterPrompt = Label(textFrame, text="Choose Your Character: ")
+characterPrompt = Label(textFrame, text="Choose Your Character:")
+boButton = Button(textFrame, text="Bo", fg="red")
+brandonButton = Button(textFrame, text="Brandon", fg="yellow")
+blueButton = Button(textFrame, text="Blue", fg="blue")
 
 
 # Page 3 Welcome message, character choice
 def makePage3():
+    global counter
+    counter = 3
+    screen.config(text=str("Page " + str(counter)))
+
     nameEntry.destroy()
     nameButton.destroy()
     characterPrompt.pack(side=TOP)
+    boButton.grid(row=1, column=0)
+    brandonButton.grid(row=1, column=1)
+
+    blueButton.pack(side=LEFT)
 
 
 window.mainloop()
