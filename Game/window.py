@@ -15,6 +15,8 @@ textFrame = Frame(window)
 artFrame.pack()
 textFrame.pack()
 
+
+
 """
 canvas = Canvas(artFrame, height=400, width=800)
 canvas.pack(fill=BOTH, expand=1)

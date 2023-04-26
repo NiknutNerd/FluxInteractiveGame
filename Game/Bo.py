@@ -4,4 +4,4 @@ class Bo:
             print("Default")
         else:
             self.name = name
-            print(name)
+            print("Bo: " + name)

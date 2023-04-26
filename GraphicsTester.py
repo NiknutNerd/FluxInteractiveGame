@@ -26,7 +26,7 @@ y2 = 400
 
 canvas.create_line(x1, y1, x2, y2, width=5)
 
-pixelSize = 2
+pixelSize = 8
 for x1 in range(0, width, pixelSize):
     for y1 in range(0, 400, pixelSize):
         print(str(x1) + ", " + str(y1))
